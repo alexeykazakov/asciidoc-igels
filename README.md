@@ -1,4 +1,1 @@
-asciidoc-igels
-==============
-
-AsciiDoc online viewer
+AsciiDoc online viewer http://asciidoc-igels.rhcloud.com/

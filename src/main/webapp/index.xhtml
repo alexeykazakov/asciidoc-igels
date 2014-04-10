@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<h:head>
+<script>
+//<![CDATA[ 
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36284741-2', 'asciidoc-igels.rhcloud.com');
+  ga('send', 'pageview');
+  //]]>
+</script>
+	<title>AsciiDoc Online Viewer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Asciidoc Web Editor"/>
+	<meta name="keywords" content="Asciidoc,Online,Web,Viewer,Editor,Preview"/>
+	<meta name="author" content="Alexey Kazakov"/>
+	<link rel="stylesheet" href="http://asciidoc.org/asciidoc.css" />
+</h:head>
+<h:body style="height: 97%; margin: 1em 10px 1em 10px; background:#eff3f9 url('images/bg-f.png') repeat-x 0 -40px;}">
+	<h:outputStylesheet>
+		html {
+			height: 100%;
+			width: 100%;
+			vertical-align: top;
+		}
+		textarea {
+			height: 100%;
+			width: 100%;
+			vertical-align: top;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 14px;
+		}
+		a {
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 14px;
+		}
+		.maintable {
+			height: 100%;
+			width: 100%;
+			vertical-align: top;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 14px;
+		}
+        .col {
+	        width: 50%;
+	        height:100%;
+	        padding: 10px;
+	        padding: 0px 30px 0px 0px;
+	        vertical-align: top;
+        }
+        .editor {
+	        width: 100%;
+	        height: 100%;
+	        vertical-align: top;
+        }
+        .preview {
+	        width: 100%;
+	        height: 100%;
+	        vertical-align: top;
+	        overflow: auto;
+	        font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 14px;
+        }
+    </h:outputStylesheet>
+
+	<h:form>
+		<a4j:poll id="refreshout" interval="#{(session.maxInactiveInterval-60)*1000}" render="out"/>
+	</h:form>
+	<h:form styleClass="maintable">
+		<table class="maintable">
+			<tr>
+				<td class="col">
+					<h:inputTextarea id="text" label="text" value="#{converter.text}" styleClass="editor">
+						<a4j:ajax event="keyup" execute="@this" render="out" />
+					</h:inputTextarea>
+				</td>
+				<td class="col">
+					<rich:panel style="width:100%;height: 100%;" bodyClass="preview">
+						<a4j:outputPanel layout="block">
+								<a4j:outputPanel layout="block" ajaxRendered="true">
+									<h:message for="text" style="color:red" />
+								</a4j:outputPanel>
+								<a4j:outputPanel id="out" layout="block" style="width:97%;">
+									<h:outputText value="#{converter.html}" escape="false" />
+								</a4j:outputPanel>
+						</a4j:outputPanel>
+					</rich:panel>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+</h:body>
+
+</html>
